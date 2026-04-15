@@ -9,35 +9,35 @@ class ProfileController extends Controller
 {
     public function edit()
     {
-        return view('profile.edit');
+        return view('profile.edit', [
+            'user' => Auth::user()
+        ]);
     }
 
-   
-public function updateProfile(Request $request)
-{
-    $user = auth()->user();
+    public function update(Request $request)
+    {
+        $user = Auth::user();
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'cutiemark' => 'nullable|string|max:255',
-        'photo' => 'nullable|image|max:2048'
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'cutiemark' => 'nullable|string|max:255',
+            'photo' => 'nullable|image|max:2048'
+        ]);
 
-    $user->name = $request->name;
-    $user->cutiemark = $request->cutiemark;
+        $user->name = $request->name;
+        $user->cutiemark = $request->cutiemark;
 
-    if ($request->hasFile('photo')) {
-        $path = $request->file('photo')->store('profiles', 'public');
-        $user->photo = $path;
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('profiles', 'public');
+            $user->photo = $path;
+        }
+
+        $user->save();
+
+        return redirect('/')->with('success', 'Perfil atualizado com sucesso!');
     }
 
-    $user->save();
-
-    auth()->setUser($user);
-
-    return redirect('/')->with('success', 'Perfil atualizado com sucesso!');
-}
-    public function destroy(Request $request)
+    public function destroy()
     {
         $user = Auth::user();
 

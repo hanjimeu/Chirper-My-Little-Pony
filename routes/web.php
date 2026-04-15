@@ -17,12 +17,11 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-// perfil
 Route::get('/profile/edit', [ProfileController::class, 'edit'])
     ->middleware('auth')
     ->name('profile.edit');
 
-Route::post('/profile', [ProfileController::class, 'updateProfile'])
+Route::put('/profile', [ProfileController::class, 'update'])
     ->middleware('auth')
     ->name('profile.update');
 
