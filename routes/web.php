@@ -162,7 +162,8 @@ Route::post('/chirps', function (Request $request) {
 // --- NOVAS ROTAS DE EDIÇÃO E EXCLUSÃO ---
 
 // 1. Rota para salvar a edição (UPDATE) - RESOLVE O ERRO DA IMAGEM
-Route::post('/chirps/{id}/update', [ChirpController::class, 'update'])->name('chirps.update');
+Route::patch('/chirps/{chirp}', [ChirpController::class, 'update'])
+    ->name('chirps.update');
 
 // 2. Rota para excluir chirp (Você já tinha, mantive aqui)
 Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])->name('chirps.destroy')->middleware('auth');

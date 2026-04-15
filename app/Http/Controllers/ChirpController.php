@@ -50,11 +50,13 @@ class ChirpController extends Controller
             abort(403, 'Você não tem permissão para editar este pônei!');
         }
 
-        $validated = $request->validate([
-            'message' => 'required|string|max:255',
-        ]);
+       $validated = $request->validate([
+    'message' => 'required|string|max:255',
+]);
 
-        $chirp->update($validated);
+
+        $chirp->message = $validated['message'];
+$chirp->save();
 
         return redirect(route('chirps.index'));
     }
