@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\Notification;
 
 // sobre
@@ -17,17 +17,9 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/profile/edit', [ProfileController::class, 'edit'])
-    ->middleware('auth')
-    ->name('profile.edit');
-
-Route::put('/profile', [ProfileController::class, 'update'])
-    ->middleware('auth')
-    ->name('profile.update');
-
-Route::delete('/profile/delete', [ProfileController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('profile.destroy');
+Route::get('/profile/edit', [UserProfileController::class, 'edit'])->middleware('auth');
+Route::put('/profile', [UserProfileController::class, 'update'])->middleware('auth');
+Route::delete('/profile/delete', [UserProfileController::class, 'destroy'])->middleware('auth');
 
 
 // --- NOTIFICAÇÕES ---
