@@ -19,7 +19,7 @@ Route::get('/about', function () {
 
 // perfil
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->middleware('auth');
-Route::post('/profile/update', [ProfileController::class, 'update'])->middleware('auth');
+Route::put('/profile', [ProfileController::class, 'updateProfile'])->middleware('auth');
 Route::delete('/profile/delete', [ProfileController::class, 'destroy']);
 
 

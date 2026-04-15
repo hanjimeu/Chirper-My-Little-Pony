@@ -13,7 +13,7 @@ class ProfileController extends Controller
     }
 
    
-public function update(Request $request)
+public function updateProfile(Request $request)
 {
     $user = auth()->user();
 
