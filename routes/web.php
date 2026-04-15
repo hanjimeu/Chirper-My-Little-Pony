@@ -18,24 +18,28 @@ Route::get('/about', function () {
 })->name('about');
 
 // perfil
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->middleware('auth');
-Route::put('/profile', [ProfileController::class, 'updateProfile'])->middleware('auth');
-Route::delete('/profile/delete', [ProfileController::class, 'destroy']);
+Route::get('/profile/edit', [ProfileController::class, 'edit'])
+    ->middleware('auth')
+    ->name('profile.edit');
+
+Route::post('/profile', [ProfileController::class, 'updateProfile'])
+    ->middleware('auth')
+    ->name('profile.update');
+
+Route::delete('/profile/delete', [ProfileController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('profile.destroy');
 
 
 // --- NOTIFICAÇÕES ---
 
-// Rota principal: Marca tudo como lido e exibe a lista
 Route::get('/notifications', function () {
-    // Busca o ID do usuário logado
     $userId = Auth::id();
 
-    // 1. Marca todas as notificações não lidas deste usuário como lidas
     \App\Models\Notification::where('user_id', $userId)
         ->where('read', false)
         ->update(['read' => true]);
 
-    // 2. Busca as notificações (agora todas já marcadas como lidas no banco)
     $notifications = \App\Models\Notification::with('fromUser')
         ->where('user_id', $userId)
         ->latest()
@@ -44,31 +48,29 @@ Route::get('/notifications', function () {
     return view('notifications', compact('notifications'));
 })->middleware('auth');
 
-// Rota de clique individual: Redireciona para o Chirp ou Comentário específico
 Route::get('/notifications/{id}', function ($id) {
 
     $notification = \App\Models\Notification::where('id', $id)
         ->where('user_id', Auth::id())
         ->firstOrFail();
 
-    // Garante que esta específica esteja lida (útil se acessada por link direto)
     $notification->update(['read' => true]);
 
-    // Se for um comentário → Redireciona para a âncora do comentário
     if ($notification->type === 'comment' && $notification->comment_id) {
         return redirect('/#comment-' . $notification->comment_id);
     }
 
-    // Se for um like → Redireciona para a âncora do post (Chirp)
     return redirect('/#chirp-' . $notification->chirp_id);
 
 })->middleware('auth');
 
-//comentário
-Route::post('/chirps/{chirp}/comment', [CommentController::class, 'store'])->middleware('auth');
+// comentário
+Route::post('/chirps/{chirp}/comment', [CommentController::class, 'store'])
+    ->middleware('auth');
 
-//like
-Route::post('/chirps/{chirp}/like', [LikeController::class, 'toggle'])->middleware('auth');
+// like
+Route::post('/chirps/{chirp}/like', [LikeController::class, 'toggle'])
+    ->middleware('auth');
 
 // home
 Route::get('/', function () {
@@ -76,20 +78,19 @@ Route::get('/', function () {
     return view('home', compact('chirps'));
 })->name('chirps.index');
 
+
 // --- CADASTRO ---
 
-// 1. Rota GET: Para abrir a página do formulário
 Route::get('/signup', function () {
     return view('signup');
-})->name('signup'); // Adicionado o nome para facilitar
+})->name('signup');
 
-// 2. Rota POST: Para processar os dados enviados pelo formulário
 Route::post('/signup', function (Request $request) {
     $request->validate([
         'name' => 'required',
         'email' => 'required|email|unique:users',
         'password' => 'required|min:4',
-        'cutiemark' => 'required', 
+        'cutiemark' => 'required',
         'photo' => 'nullable|image|max:2048'
     ]);
 
@@ -129,7 +130,6 @@ Route::post('/login', function (Request $request) {
     ]);
 });
 
-
 // logout
 Route::post('/logout', function (Request $request) {
     Auth::logout();
@@ -138,8 +138,7 @@ Route::post('/logout', function (Request $request) {
     return redirect('/');
 });
 
-
-// chirps (Criar)
+// criar chirp
 Route::post('/chirps', function (Request $request) {
     if (!Auth::check()) {
         return redirect('/login');
@@ -159,11 +158,12 @@ Route::post('/chirps', function (Request $request) {
     return redirect('/');
 });
 
-// --- NOVAS ROTAS DE EDIÇÃO E EXCLUSÃO ---
-
-// 1. Rota para salvar a edição (UPDATE) - RESOLVE O ERRO DA IMAGEM
+// editar chirp
 Route::patch('/chirps/{chirp}', [ChirpController::class, 'update'])
-    ->name('chirps.update');
+    ->name('chirps.update')
+    ->middleware('auth');
 
-// 2. Rota para excluir chirp (Você já tinha, mantive aqui)
-Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])->name('chirps.destroy')->middleware('auth');
+// deletar chirp
+Route::delete('/chirps/{chirp}', [ChirpController::class, 'destroy'])
+    ->name('chirps.destroy')
+    ->middleware('auth');

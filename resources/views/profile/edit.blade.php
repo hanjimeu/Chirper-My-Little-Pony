@@ -87,8 +87,8 @@
                 <div class="bg-white border-4 border-black rounded-3xl p-6 shadow-[8px_8px_0px_black]">
                     <h2 class="text-xl font-black mb-5 text-center uppercase tracking-tight text-pink-500">Editar Perfil</h2>
 
-                    <form method="POST" action="/profile/update" enctype="multipart/form-data">
-                        @csrf
+                    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+    @csrf
                         
                         <div class="mb-4">
                             <label class="text-[10px] font-black uppercase text-black/40 ml-1">Seu Nome</label>
