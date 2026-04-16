@@ -10,12 +10,14 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('photo')->nullable()->after('email');
-            $table->string('cutiemark')->nullable()->after('photo');
-        });
-    }
+{
+    Schema::table('users', function (Blueprint $table) {
+        // Verifica se a coluna NÃO existe antes de criar
+        if (!Schema::hasColumn('users', 'photo')) {
+            $table->string('photo')->nullable();
+        }
+    });
+}
 
     /**
      * Reverse the migrations.
