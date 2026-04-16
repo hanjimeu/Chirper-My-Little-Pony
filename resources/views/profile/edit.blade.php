@@ -87,7 +87,7 @@
                 <div class="bg-white border-4 border-black rounded-3xl p-6 shadow-[8px_8px_0px_black]">
                     <h2 class="text-xl font-black mb-5 text-center uppercase tracking-tight text-pink-500">Editar Perfil</h2>
 
-                    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
                         
@@ -154,15 +154,17 @@
         </div>
     </div>
 
+    
     <script>
         function openDeleteAccountModal() { document.getElementById('delete-account-modal').classList.remove('hidden'); }
         function closeDeleteAccountModal() { document.getElementById('delete-account-modal').classList.add('hidden'); }
 
-        // Preview da foto ao selecionar
-        document.getElementById('photoInput').onchange = evt => {
-            const [file] = evt.target.files;
-            if (file) { document.getElementById('preview').src = URL.createObjectURL(file); }
+    document.getElementById('photoInput').onchange = evt => {
+        const [file] = document.getElementById('photoInput').files
+        if (file) {
+            document.getElementById('preview').src = URL.createObjectURL(file)
         }
+    }
     </script>
 </body>
 </html>
