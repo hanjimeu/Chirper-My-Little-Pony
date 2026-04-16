@@ -95,6 +95,15 @@
                 Entrar
             </span>
         </div>
+
+        <div class="relative group">
+            <a href="/signup">
+                <img src="/images/princesscelestia.png" class="w-12 h-12 cursor-pointer select-none">
+            </a>
+            <span class="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                Cadastrar-se
+            </span>
+        </div>
     @endguest
 
 </div>
@@ -112,7 +121,7 @@
             @endif
         </a>
 
-        <div class="flex items-center gap-1.5 bg-black/5 p-1 rounded-full pr-4 border border-black/10">
+        <div class="flex items-center gap-1.5 ">
             <div class="relative group cursor-pointer">
                 <a href="/profile/edit">
                     <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . auth()->user()->id }}"

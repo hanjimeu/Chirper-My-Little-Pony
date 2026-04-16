@@ -112,6 +112,7 @@
     @endguest
 
 </div>
+
             {{-- EXIBE APENAS SE ESTIVER LOGADO --}}
             @auth
     <div class="flex items-center gap-3 ml-2 pl-3 border-l-2 border-black/20">
@@ -157,7 +158,6 @@
         </div>
     </div>
 </nav>
-
 
 
 

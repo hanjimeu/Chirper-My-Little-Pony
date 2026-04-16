@@ -44,8 +44,8 @@
             <source src="audio/mlpabertura.mp3" type="audio/mpeg">
         </audio>
 
-        <!-- navbar -->
-        <nav class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur border-b-4 border-black shadow">
+       <!-- navbar -->
+        <nav class="fixed top-0 left-0 w-full z-50 bg-pink-100 backdrop-blur border-b-4 border-black shadow">
     <div class="flex justify-between items-center px-6 py-4">
 
         @php
@@ -109,7 +109,7 @@
 </div>
 
             {{-- EXIBE APENAS SE ESTIVER LOGADO --}}
-           @auth
+            @auth
     <div class="flex items-center gap-3 ml-2 pl-3 border-l-2 border-black/20">
         
         <a href="/notifications" class="relative">
@@ -121,7 +121,7 @@
             @endif
         </a>
 
-        <div class="flex items-center gap-1.5 bg-black/5 p-1 rounded-full pr-4 border border-black/10">
+        <div class="flex items-center gap-1.5 ">
             <div class="relative group cursor-pointer">
                 <a href="/profile/edit">
                     <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : 'https://api.dicebear.com/7.x/adventurer/svg?seed=' . auth()->user()->id }}"
