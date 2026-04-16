@@ -17,9 +17,17 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/profile/edit', [UserProfileController::class, 'edit'])->middleware('auth');
-Route::put('/profile', [UserProfileController::class, 'update'])->middleware('auth');
-Route::delete('/profile/delete', [UserProfileController::class, 'destroy'])->middleware('auth');
+Route::get('/profile/edit', [UserProfileController::class, 'edit'])
+    ->middleware('auth')
+    ->name('profile.edit');
+
+Route::post('/profile', [UserProfileController::class, 'update'])
+    ->middleware('auth')
+    ->name('profile.update');
+
+Route::delete('/profile/delete', [UserProfileController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('profile.destroy');
 
 
 // --- NOTIFICAÇÕES ---

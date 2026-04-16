@@ -89,6 +89,7 @@
 
                     <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
     @csrf
+
                         
                         <div class="mb-4">
                             <label class="text-[10px] font-black uppercase text-black/40 ml-1">Seu Nome</label>
